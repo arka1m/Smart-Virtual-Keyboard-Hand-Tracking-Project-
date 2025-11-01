@@ -1,6 +1,64 @@
 # Smart-Virtual-Keyboard-Hand-Tracking-Project-
 
- A real-time Virtual Keyboard built using OpenCV, Mediapipe, and cvzone — control your keyboard with hand gestures instead of keys!
+ A real-time Virtual Keyboard built using OpenCV, Mediapipe, and cvzone — control your keyboard with hand gestures instead of keys
+
+
+ 
+ This project turns your webcam into a smart virtual keyboard using AI-powered hand tracking.
+With just your fingers, you can hover, select, and type on a digital keyboard displayed on your screen.
+It’s a fun and futuristic project combining computer vision, gesture recognition, and Python programming.
+ 💡 Key Highlights
+
+Real-time hand gesture detection using Mediapipe
+
+Smooth and colorful on-screen keyboard interface
+
+Detects pinch gestures to simulate key presses
+
+Supports typing, space, and backspace functions
+
+Ideal for AI, computer vision, and HCI (Human-Computer Interaction) projects
+🧰 Tech Stack
+
+Language: Python
+
+Libraries: OpenCV, Mediapipe, cvzone, NumPy
+
+Hardware: Any standard webcam
+
+💻 Usage
+
+Run the script and allow webcam access.
+
+Use your index finger to point to any key.
+
+Pinch with index + middle finger to “press” the key.
+
+The pressed keys appear in the text area on top of the screen.
+
+🧠 Inspiration
+
+This project explores the concept of contactless typing — a futuristic and hygienic input method that blends AI and Computer Vision.
+
+📚 Ideal For
+
+Students learning OpenCV or Mediapipe
+
+Gesture recognition enthusiasts
+
+Final year or mini-projects in AI / CV / HCI
+
+✨ Sample One-Liners (for GitHub “About” section)
+
+"Virtual keyboard controlled by hand gestures using Mediapipe and OpenCV 👋"
+
+"AI-powered gesture-based typing system 🔠"
+
+"Contactless typing interface using hand tracking 💻🖐️"
+
+"A futuristic on-screen keyboard controlled by finger movements"
+
+"Gesture-controlled virtual keyboard built with Python, OpenCV, and Mediapipe"
 
 
 
@@ -165,63 +223,3 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 cv2.waitKey(1)  # Ensures window actually closes
-
-
-
-
- 
- This project turns your webcam into a smart virtual keyboard using AI-powered hand tracking.
-With just your fingers, you can hover, select, and type on a digital keyboard displayed on your screen.
-It’s a fun and futuristic project combining computer vision, gesture recognition, and Python programming.
- 💡 Key Highlights
-
-Real-time hand gesture detection using Mediapipe
-
-Smooth and colorful on-screen keyboard interface
-
-Detects pinch gestures to simulate key presses
-
-Supports typing, space, and backspace functions
-
-Ideal for AI, computer vision, and HCI (Human-Computer Interaction) projects
-🧰 Tech Stack
-
-Language: Python
-
-Libraries: OpenCV, Mediapipe, cvzone, NumPy
-
-Hardware: Any standard webcam
-
-💻 Usage
-
-Run the script and allow webcam access.
-
-Use your index finger to point to any key.
-
-Pinch with index + middle finger to “press” the key.
-
-The pressed keys appear in the text area on top of the screen.
-
-🧠 Inspiration
-
-This project explores the concept of contactless typing — a futuristic and hygienic input method that blends AI and Computer Vision.
-
-📚 Ideal For
-
-Students learning OpenCV or Mediapipe
-
-Gesture recognition enthusiasts
-
-Final year or mini-projects in AI / CV / HCI
-
-✨ Sample One-Liners (for GitHub “About” section)
-
-"Virtual keyboard controlled by hand gestures using Mediapipe and OpenCV 👋"
-
-"AI-powered gesture-based typing system 🔠"
-
-"Contactless typing interface using hand tracking 💻🖐️"
-
-"A futuristic on-screen keyboard controlled by finger movements"
-
-"Gesture-controlled virtual keyboard built with Python, OpenCV, and Mediapipe"
