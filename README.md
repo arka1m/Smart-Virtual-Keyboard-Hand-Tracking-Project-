@@ -7,16 +7,14 @@
 Code :
 
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TensorFlow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 import cv2
-import time
 from cvzone.HandTrackingModule import HandDetector
 
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-cap.set(3, 1280)  # Width
-cap.set(4, 800)   # Height
-cap.set(cv2.CAP_PROP_FPS, 30)
+cap.set(3, 1280)
+cap.set(4, 800)
 
 detector = HandDetector(detectionCon=0.8, maxHands=1)
 
@@ -48,21 +46,16 @@ spacebar_color = (255, 180, 100)
 backspace_color = (50, 50, 50)
 hover_color = (0, 255, 255)
 
-screenshot_count = 0
-last_screenshot_time = time.time()
-
 def interpolate_color(c1, c2, f):
     return (int(c1[0] + (c2[0]-c1[0])*f),
             int(c1[1] + (c2[1]-c1[1])*f),
             int(c1[2] + (c2[2]-c1[2])*f))
 
 def draw_keyboard(img):
-    """Draws the virtual keyboard layout."""
     overlay = img.copy()
     h, w = img.shape[:2]
     cv2.rectangle(overlay, (0, start_y-30), (w, h), overlay_color, -1)
     cv2.addWeighted(overlay, overlay_alpha, img, 1 - overlay_alpha, 0, img)
-
     for rowIndex, row in enumerate(keyboardRows):
         if row == ["Space", "Backspace"]:
             width_space = button_w*4 + button_gap*3
@@ -70,10 +63,8 @@ def draw_keyboard(img):
             total_width = width_space + button_gap + width_backspace
             start_x = (w - total_width)//2
             y = start_y + rowIndex*(button_h + button_gap)
-            # Spacebar
             cv2.rectangle(img, (start_x, y), (start_x+width_space, y+button_h), spacebar_color, -1)
             cv2.putText(img, "Space", (start_x+30, y+45), cv2.FONT_HERSHEY_PLAIN, 3, text_color, 3)
-            # Backspace
             x_back = start_x + width_space + button_gap
             cv2.rectangle(img, (x_back, y), (x_back+width_backspace, y+button_h), backspace_color, -1)
             cv2.putText(img, "BS", (x_back+15, y+45), cv2.FONT_HERSHEY_PLAIN, 3, text_color, 3)
@@ -88,11 +79,9 @@ def draw_keyboard(img):
                 y = start_y + rowIndex*(button_h + button_gap)
                 cv2.rectangle(img, (x, y), (x+button_w, y+button_h), color, -1)
                 ts = cv2.getTextSize(key, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]
-                cv2.putText(img, key, (x + (button_w-ts[0])//2, y + (button_h+ts[1])//2),
-                            cv2.FONT_HERSHEY_PLAIN, 2, text_color, 2)
+                cv2.putText(img, key, (x + (button_w-ts[0])//2, y + (button_h+ts[1])//2), cv2.FONT_HERSHEY_PLAIN, 2, text_color, 2)
 
 def highlight_key(img, key, rowIndex, keyIndex):
-    """Highlights the key currently selected."""
     h, w = img.shape[:2]
     if key in ["Space", "Backspace"]:
         width_space = button_w*4 + button_gap*3
@@ -114,9 +103,7 @@ def highlight_key(img, key, rowIndex, keyIndex):
         y = start_y + rowIndex*(button_h + button_gap)
         cv2.rectangle(img, (x, y), (x+button_w, y+button_h), hover_color, -1)
         ts = cv2.getTextSize(key, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]
-        cv2.putText(img, key, (x + (button_w-ts[0])//2, y + (button_h+ts[1])//2),
-                    cv2.FONT_HERSHEY_PLAIN, 2, text_color, 2)
-
+        cv2.putText(img, key, (x + (button_w-ts[0])//2, y + (button_h+ts[1])//2), cv2.FONT_HERSHEY_PLAIN, 2, text_color, 2)
 
 while True:
     success, img = cap.read()
@@ -125,14 +112,12 @@ while True:
     img = cv2.flip(img, 1)
     hands, img = detector.findHands(img)
     draw_keyboard(img)
-
     if hands:
         lmList = hands[0]["lmList"]
         if len(lmList) > 12:
             x1, y1 = lmList[8][:2]
             x2, y2 = lmList[12][:2]
-            distance = ((x2-x1)**2 + (y2-y1)**2)**0.5
-
+            distance = ((x2-x1)*2 + (y2-y1)2)*0.5
             for rowIndex, row in enumerate(keyboardRows):
                 if row == ["Space", "Backspace"]:
                     width_space = button_w*4 + button_gap*3
@@ -140,25 +125,19 @@ while True:
                     total_width = width_space + button_gap + width_backspace
                     start_x = (img.shape[1]-total_width)//2
                     y = start_y + rowIndex*(button_h + button_gap)
-
-                    # --- Space Key ---
                     if start_x < x1 < start_x+width_space and y < y1 < y+button_h:
                         highlight_key(img, "Space", rowIndex, 0)
                         if distance < 40 and (delayCounter == 0 or lastKey != "Space"):
                             finalText += " "
                             lastKey = "Space"
                             delayCounter = 1
-
-                    # --- Backspace Key ---
                     x_back = start_x + width_space + button_gap
                     if x_back < x1 < x_back+width_backspace and y < y1 < y+button_h:
                         highlight_key(img, "Backspace", rowIndex, 1)
                         if distance < 40 and (delayCounter == 0 or lastKey != "Backspace"):
-                            if finalText:
-                                finalText = finalText[:-1]
+                            finalText = finalText[:-1]
                             lastKey = "Backspace"
                             delayCounter = 1
-
                 else:
                     total_row_width = len(row)*button_w + (len(row)-1)*button_gap
                     start_x = (img.shape[1]-total_row_width)//2
@@ -171,37 +150,21 @@ while True:
                                 finalText += key
                                 lastKey = key
                                 delayCounter = 1
-
-    # --- Display typed text ---
     cv2.rectangle(img, (50, 50), (img.shape[1]-50, 150), (50, 50, 50), -1)
     cv2.putText(img, finalText, (60, 120), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 255), 3)
 
-    # --- Delay Counter ---
     if delayCounter != 0:
         delayCounter += 1
         if delayCounter > 15:
             delayCounter = 0
 
-    # --- Screenshot every 5 seconds (up to 3) ---
-    if time.time() - last_screenshot_time > 5 and screenshot_count < 3:
-        filename = f"virtual_keyboard_screenshot_{screenshot_count + 1}.jpg"
-        cv2.imwrite(filename, img)
-        print(f"Screenshot saved as {filename}")
-        screenshot_count += 1
-        last_screenshot_time = time.time()
-
-    # --- Show Window ---
     cv2.imshow("Virtual Keyboard", img)
-
-    # Exit on ESC key
-    if cv2.waitKey(1) & 0xFF == 27:
+    if cv2.waitKey(1) & 0xFF == 27:  # ESC key
         break
-
 
 cap.release()
 cv2.destroyAllWindows()
-cv2.waitKey(1)
- 
+cv2.waitKey(1)  # Ensures window actually closes
 
 
 
