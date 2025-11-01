@@ -13,16 +13,13 @@ import cv2
 import time
 from cvzone.HandTrackingModule import HandDetector
 
-# --- Setup Camera ---
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(3, 1280)  # Width
 cap.set(4, 800)   # Height
 cap.set(cv2.CAP_PROP_FPS, 30)
 
-# --- Initialize Hand Detector ---
 detector = HandDetector(detectionCon=0.8, maxHands=1)
 
-# --- Variables ---
 finalText = ""
 delayCounter = 0
 lastKey = None
@@ -51,11 +48,9 @@ spacebar_color = (255, 180, 100)
 backspace_color = (50, 50, 50)
 hover_color = (0, 255, 255)
 
-# --- Screenshot setup ---
 screenshot_count = 0
 last_screenshot_time = time.time()
 
-# --- Helper Functions ---
 def interpolate_color(c1, c2, f):
     return (int(c1[0] + (c2[0]-c1[0])*f),
             int(c1[1] + (c2[1]-c1[1])*f),
@@ -122,7 +117,7 @@ def highlight_key(img, key, rowIndex, keyIndex):
         cv2.putText(img, key, (x + (button_w-ts[0])//2, y + (button_h+ts[1])//2),
                     cv2.FONT_HERSHEY_PLAIN, 2, text_color, 2)
 
-# --- Main Loop ---
+
 while True:
     success, img = cap.read()
     if not success:
@@ -202,7 +197,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == 27:
         break
 
-# --- Cleanup ---
+
 cap.release()
 cv2.destroyAllWindows()
 cv2.waitKey(1)
