@@ -62,7 +62,8 @@ Final year or mini-projects in AI / CV / HCI
 
 
 
-Code :
+CODE IS :
+
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -175,7 +176,7 @@ while True:
         if len(lmList) > 12:
             x1, y1 = lmList[8][:2]
             x2, y2 = lmList[12][:2]
-            distance = ((x2-x1)*2 + (y2-y1)2)*0.5
+            distance = ((x2-x1)**2 + (y2-y1)**2)**0.5
             for rowIndex, row in enumerate(keyboardRows):
                 if row == ["Space", "Backspace"]:
                     width_space = button_w*4 + button_gap*3
@@ -223,3 +224,4 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 cv2.waitKey(1)  # Ensures window actually closes
+
