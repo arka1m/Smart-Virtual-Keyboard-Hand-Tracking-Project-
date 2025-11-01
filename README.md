@@ -2,7 +2,11 @@
 
  A real-time Virtual Keyboard built using OpenCV, Mediapipe, and cvzone — control your keyboard with hand gestures instead of keys!
 
-Code :import os
+
+
+Code :
+
+import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TensorFlow warnings
 
 import cv2
@@ -203,6 +207,7 @@ cap.release()
 cv2.destroyAllWindows()
 cv2.waitKey(1)
  
+
 
 
 
